@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default tmuxinator directory (can be overridden by TMUX_INATOR_DIR environment variable)
-tmuxinator_dir="${TMUX_INATOR_DIR:-$HOME/.config/tmuxinator}"
+tmuxinator_dir="$HOME/.config/tmuxinator"
 
 # Function to find bindings in tmuxinator files
 find_bindings() {
@@ -59,3 +59,5 @@ start_session_binder() {
       tmux kill-window -t %1
     '"
 }
+
+start_session_binder

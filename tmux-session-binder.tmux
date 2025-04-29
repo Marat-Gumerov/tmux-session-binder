@@ -1,11 +1,5 @@
-# session-binder.tmux
+#!/usr/bin/env bash
 
-# Set the path to your tmuxinator configuration directory
-tmux_inator_dir="$HOME/.config/tmuxinator"
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Set the hotkey to trigger the session binder (you can change this)
-bind-key -n F1 run-shell -b "bash -c '
-  TMUX_INATOR_DIR=\"$tmux_inator_dir\"
-  source \"$HOME/.tmux/plugins/tmux-session-binder/scripts/binder.sh\"
-  start_session_binder
-'"
+bind-key F1 run-shell  "$CURRENT_DIR/scripts/binder.sh"
