@@ -2,6 +2,7 @@
 
 # Default tmuxinator directory (can be overridden by TMUX_INATOR_DIR environment variable)
 tmuxinator_dir="$HOME/.config/tmuxinator"
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Function to find bindings in tmuxinator files
 find_bindings() {
@@ -50,14 +51,9 @@ handle_key_input() {
 # Main function to start the session binder process
 start_session_binder() {
   find_bindings
-
-  tmux display-popup -w 30 -h 3 -x C -y C "Enter session key: " \
-    "bind-key -T popup Return run-shell -b '
-      pressed_key=\"$(tmux capture-pane -ept '%' -J)\";
-      source \"$HOME/.tmux/plugins/session-binder.sh\";
-      handle_key_input \"\$pressed_key\";
-      tmux kill-window -t %1
-    '"
+  BINDER="${BASH_SOURCE[0]}"
+  RESULT=$(tmux command-prompt -1 -p "Press session binding: " "run-shell \"echo '%%'\"")
+  handle_key_input "$RESULT"
 }
 
 start_session_binder
